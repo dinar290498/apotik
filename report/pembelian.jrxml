@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pembelian" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="date1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     pembelian.`noNota` AS pembelian_noNota,
+     pembelian.`namaDistributor` AS pembelian_namaDistributor,
+     pembelian.`total` AS pembelian_total,
+     pembelian.`disc` AS pembelian_disc,
+     pembelian.`grandTotal` AS pembelian_grandTotal,
+     pembelian.`keterangan` AS pembelian_keterangan,
+     pembelian.`tglTransaksi` AS pembelian_tglTransaksi,
+     pembelianDet.`noNota` AS pembelianDet_noNota,
+     pembelianDet.`kodeObat` AS pembelianDet_kodeObat,
+     pembelianDet.`harga` AS pembelianDet_harga,
+     pembelianDet.`bny` AS pembelianDet_bny,
+     pembelianDet.`subTotal` AS pembelianDet_subTotal,
+     pembelianDet.`disc` AS pembelianDet_disc,
+     pembelianDet.`total` AS pembelianDet_total,
+     obat.namaObat as namaObat
+FROM
+     `pembelian` pembelian,
+     `pembelianDet` pembelianDet,
+      obat
+where
+      pembelian.noNota=pembelianDet.noNota and
+      obat.kodeObat=pembelianDet.kodeObat and
+      ((pembelian.tglTransaksi >= $P{date1}) and
+      (pembelian.tglTransaksi <= $P{date2})) order by pembelian.tglTransaksi desc]]>
+	</queryString>
+	<field name="pembelian_noNota" class="java.lang.String"/>
+	<field name="pembelian_namaDistributor" class="java.lang.String"/>
+	<field name="pembelian_total" class="java.math.BigDecimal"/>
+	<field name="pembelian_disc" class="java.lang.Byte"/>
+	<field name="pembelian_grandTotal" class="java.math.BigDecimal"/>
+	<field name="pembelian_keterangan" class="java.lang.String"/>
+	<field name="pembelian_tglTransaksi" class="java.sql.Timestamp"/>
+	<field name="pembelianDet_noNota" class="java.lang.String"/>
+	<field name="pembelianDet_kodeObat" class="java.lang.String"/>
+	<field name="pembelianDet_harga" class="java.math.BigDecimal"/>
+	<field name="pembelianDet_bny" class="java.lang.Short"/>
+	<field name="pembelianDet_subTotal" class="java.math.BigDecimal"/>
+	<field name="pembelianDet_disc" class="java.lang.Byte"/>
+	<field name="pembelianDet_total" class="java.math.BigDecimal"/>
+	<field name="namaObat" class="java.lang.String"/>
+	<group name="pembelianDet_noNota">
+		<groupExpression><![CDATA[$F{pembelianDet_noNota}]]></groupExpression>
+		<groupHeader>
+			<band height="44">
+				<staticText>
+					<reportElement mode="Opaque" x="2" y="4" width="50" height="21" forecolor="#000000" backcolor="#E6E6E6"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ No Nota :]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="49" y="4" width="118" height="21" forecolor="#000000" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{pembelianDet_noNota}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Transparent" x="2" y="4" width="553" height="40"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="2" y="25" width="52" height="18"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Kode]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="54" y="24" width="223" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Nama Obat]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="479" y="24" width="76" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="436" y="23" width="43" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Disc (%)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="364" y="24" width="72" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Sub Total]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="336" y="24" width="28" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Qty]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="277" y="24" width="59" height="20"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[Harga]]></text>
+				</staticText>
+				<staticText>
+					<reportElement mode="Opaque" x="163" y="5" width="23" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tgl :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+					<reportElement mode="Opaque" x="186" y="5" width="61" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.sql.Timestamp"><![CDATA[$F{pembelian_tglTransaksi}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="-">
+					<reportElement mode="Opaque" x="306" y="5" width="97" height="21" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{pembelian_namaDistributor}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="469" y="5" width="31" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Total :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="#,###">
+					<reportElement mode="Opaque" x="500" y="5" width="54" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Long"><![CDATA[$F{pembelian_grandTotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement mode="Opaque" x="403" y="5" width="48" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true" isItalic="false"/>
+					</textElement>
+					<text><![CDATA[Disc (%) :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement mode="Opaque" x="451" y="5" width="18" height="21" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Byte"><![CDATA[$F{pembelian_disc}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="54" y="25" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="277" y="25" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="336" y="25" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="364" y="26" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="436" y="25" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="479" y="25" width="1" height="18"/>
+				</line>
+				<line>
+					<reportElement x="2" y="25" width="552" height="1"/>
+				</line>
+				<staticText>
+					<reportElement mode="Opaque" x="247" y="5" width="59" height="20" backcolor="#E6E6E6"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Distributor :]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="65">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN DATA PEMBELIAN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="555" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[APOTIK NAILAH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="555" height="13"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Darmaraja - Sumedang]]></text>
+			</staticText>
+			<textField pattern="dd MMMM yyyy">
+				<reportElement x="44" y="49" width="100" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="49" width="52" height="13"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Tgl Cetak :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="361" y="49" width="48" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Laporan Tgl :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="456" y="49" width="35" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Sampai :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="409" y="49" width="47" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="491" y="49" width="64" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{date2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="2"/>
+	</pageHeader>
+	<detail>
+		<band height="19">
+			<textField isStretchWithOverflow="true">
+				<reportElement x="336" y="0" width="28" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Short"><![CDATA[$F{pembelianDet_bny}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement x="369" y="0" width="66" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{pembelianDet_total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement x="279" y="0" width="56" height="19"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{pembelianDet_harga}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="437" y="1" width="41" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Byte"><![CDATA[$F{pembelianDet_disc}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="2" y="1" width="53" height="18"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pembelianDet_kodeObat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="212" height="19"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{namaObat}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="2" y="0" width="553" height="19"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" pattern="#,###">
+				<reportElement x="480" y="1" width="75" height="17"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{pembelianDet_subTotal}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="436" y="-1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="479" y="-1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="54" y="-1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="277" y="-1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="336" y="-1" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement x="364" y="0" width="1" height="19"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="436" y="4" width="79" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
